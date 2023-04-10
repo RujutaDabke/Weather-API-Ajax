@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Weather</h1>
+    <form id="weatherform">
+        <label for="city">Enter city name:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Get Weather</button>
+    </form>
+    <div id="weatherdata"></div>
+    <script>
+        $(document).ready(function() {
+         $('#weatherform').submit(function(event) {
+            event.preventDefault();
+            var city= $('#city').val();
+            var url = 'https://api.openweathermap.org/data/2.5/weather?q=' + city +
+                    '&appid=28abbb5fa1436feeb6424395fad23ef5&units=imperial';
+        $.ajax({
+            url: url,
+            method: 'GET',
+            success: function(data) {
+                var weather='Current temperature in' + data.name+ ': '+ data.main.temp +' °F';
+                $('#weatherdata').html(weather);
+            },
+            error: function() {
+                $('#weatherdata').html('Error fetching weather data');
+            }
+        });
+         });
+        });
+    </script>
+</body>
+</html>
